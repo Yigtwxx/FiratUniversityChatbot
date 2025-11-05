@@ -20,7 +20,8 @@ A **local, offline** Turkish **document search & Q&A** assistant built for Fıra
 The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**, builds a lightweight **BM25** index with Turkish-aware normalization, and answers users via a minimal **FastAPI** web UI.
 
 /assets/
-  banner.png        # 1200x300 ya da 1600x400
+ <img width="1855" height="919" alt="image" src="https://github.com/user-attachments/assets/e51aff06-dc4b-4d38-987b-bf93e9622887" />
+
   screenshot-1.png  # chat ekranı
 
 
