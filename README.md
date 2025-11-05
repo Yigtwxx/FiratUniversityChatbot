@@ -19,6 +19,11 @@ Here’s a polished, drop-in **README.md** for your project—fully in English, 
 A **local, offline** Turkish **document search & Q&A** assistant built for Fırat University resources.
 The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**, builds a lightweight **BM25** index with Turkish-aware normalization, and answers users via a minimal **FastAPI** web UI.
 
+/assets/
+  banner.png        # 1200x300 ya da 1600x400
+  screenshot-1.png  # chat ekranı
+
+
 ---
 
 ## ✨ Key Features
