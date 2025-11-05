@@ -15,6 +15,16 @@ Here’s a polished, drop-in **README.md** for your project—fully in English, 
   <img alt="Status" src="https://img.shields.io/badge/Status-Active-brightgreen">
 </p>
 
+<p align="left">
+  <a href="https://huggingface.co/spaces/<kullanici>/<space-adi>" target="_blank">
+    <img src="https://img.shields.io/badge/Live%20Demo-Hugging%20Face%20Spaces-yellow" alt="Live Demo">
+  </a>
+  <a href=["https://yigtwx-firat-universitesi-chatbotv4.hf.space/chat"] target="_blank">
+    <img src="https://img.shields.io/badge/Online-Available-brightgreen" alt="Online">
+  </a>
+</p>
+
+
 A **local, offline** Turkish **document search & Q&A** assistant built for Fırat University resources.
 The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**, builds a lightweight **BM25** index with Turkish-aware normalization, and answers users via a minimal **FastAPI** web UI.
 
