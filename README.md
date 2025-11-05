@@ -279,3 +279,12 @@ Released under the **MIT License**. See `LICENSE` for details.
 ---
 
 > *“Offline RAG-style Q&A for university regulations—fast, safe, and local.”*
+>
+> ## 🤝 Contributing
+
+Contributions are welcome!  
+Please open an issue to discuss major changes. Run `ruff`/`black` before PRs:
+```bash
+ruff check --fix .
+black .
+
