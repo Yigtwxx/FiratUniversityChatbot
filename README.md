@@ -2,15 +2,6 @@
 Fırat University Assistant: An offline Turkish question-answering and document search system built on local PDFs using FastAPI, pdfplumber, and BM25.
 Here’s a polished, drop-in **README.md** for your project—fully in English, professional, and tailored to your FastAPI + pdfplumber + BM25 app and Hugging Face Spaces setup.
 
-<p align="center">
-  <img src="assets/banner.png" alt="Fırat University Assistant" width="100%">
-</p>
-
-<p align="center">
-  <img src="assets/screenshot-1.png" alt="Chat UI" width="75%">
-</p>
-
-
 ---
 
 # Fırat University Assistant — Offline PDF QA & Search
