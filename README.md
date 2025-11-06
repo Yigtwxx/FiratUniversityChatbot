@@ -12,6 +12,13 @@
   <img alt="Status" src="https://img.shields.io/badge/Status-Active-brightgreen">
 </p>
 
+![CI](https://img.shields.io/github/actions/workflow/status/Yigtwxx/FiratUniversityChatbot/ci.yml?branch=main)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
+![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)
+![Issues](https://img.shields.io/github/issues/Yigtwxx/FiratUniversityChatbot)
+![Stars](https://img.shields.io/github/stars/Yigtwxx/FiratUniversityChatbot)
+
+
 
 A **local, offline** Turkish **document search & Q&A** assistant built for Fırat University resources.
 The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**, builds a lightweight **BM25** index with Turkish-aware normalization, and answers users via a minimal **FastAPI** web UI.
