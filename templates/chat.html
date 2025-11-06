@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Fırat Üniversitesi Asistanı </title>
+
+  <link rel="icon" href="/static/firat-logo.png">
+  <link rel="apple-touch-icon" href="/static/firat-logo.png">
+
+  <style>
+    /* CSS kodları burada (değişiklik yok) */
+    :root{
+      --bg:#0a0f1c;
+      --panel:#0b1324;
+      --panel-2:#091225;
+      --muted:#9fb0c6;
+      --text:#f3f4f6;
+      --accent:#7c8cff;
+      --accent-2:#60a5fa;
+      --ok:#10b981;
+      --no:#ef4444;
+      --bubble-user:#162238;
+      --bubble-bot:#0a0f1c;
+      --border:rgba(148,163,184,.16);
+      --shadow:0 10px 30px rgba(0,0,0,.40);
+      --radius:18px;
+      --bg-dot: rgba(160, 140, 255, .95);
+      --bg-line: rgba(120, 170, 255, .28);
+      --bg-glow: 150, 170, 255;
+      --bg-fade: 0.075;
+      --vh: 1vh;
+      --topbarH: 60px;
+      --composerH: 90px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background:
+        radial-gradient(90vw 90vh at 15% -10%, rgba(124,140,255,.12), transparent 55%),
+        radial-gradient(80vw 70vh at 110% 15%, rgba(96,165,250,.10), transparent 55%),
+        radial-gradient(120vw 110vh at -10% 110%, rgba(56, 0, 80,.08), transparent 55%),
+        var(--bg);
+      color:var(--text);
+      font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial, system-ui, "Apple Color Emoji","Segoe UI Emoji";
+      letter-spacing:.2px;
+      -webkit-text-size-adjust:100%;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior: none;
+      touch-action: manipulation;
+    }
+    #cosmic-bg{ position:fixed; inset:0; z-index:-1; pointer-events:none; }
+    #cosmic-bg canvas{ display: block; width: 100%; height: 100%; }
+    #cosmic-bg::before{
+      content:""; position:absolute; inset:0; mix-blend-mode:screen;
+      background:
+        radial-gradient(1100px 700px at 20% 18%, rgba(255,255,255,.04), transparent 60%),
+        radial-gradient(1000px 700px at 82% 85%, rgba(120,120,255,.05), transparent 55%),
+        radial-gradient(1200px 900px at 60% 40%, rgba(0,0,0,.18), transparent 60%);
+      opacity:.9;
+    }
+    @media (prefers-reduced-motion: reduce) { #cosmic-bg { display:none; } }
+    .topbar{
+      position:sticky; top:0; z-index:5;
+      background:linear-gradient(90deg, rgba(9,18,36,.80), rgba(5,10,24,.80));
+      border-bottom:1px solid var(--border);
+      backdrop-filter:saturate(140%) blur(10px);
+      -webkit-backdrop-filter:saturate(140%) blur(10px);
+    }
+    .hambox{ position:absolute; left:12px; top:50%; transform:translateY(-50%); z-index:6; }
+    .hamburger{
+      appearance:none; background:transparent; border:none; padding:0; margin:0;
+      width:30px; height:22px; display:inline-grid; gap:6px;
+      cursor:pointer; opacity:.9; transition:.15s opacity,.15s transform;
+      -webkit-tap-highlight-color: transparent; outline: none;
+    }
+    .hamburger:hover{ opacity:1; transform:translateY(-1px) }
+    .hamburger:active{ transform:scale(.98) }
+    .hamburger:focus-visible{ box-shadow:0 0 0 3px rgba(124,140,255,.15); border-radius:6px; }
+    .hamburger span{ height:2px; border-radius:2px; background:#ffffff; }
+    .topwrap{
+      position:relative; max-width:1100px; margin:0 auto;
+      padding:14px 18px 14px 56px;
+      display:flex; align-items:center; gap:12px;
+    }
+    .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; }
+    .logo{
+      width:30px; height:30px; display:block; object-fit:contain;
+      border-radius:8px; background:transparent;
+      box-shadow:0 0 0 1px var(--border), 0 2px 10px rgba(0,0,0,.25);
+    }
+    .title{font-weight:800; letter-spacing:.3px}
+    .live{margin-left:auto; display:flex; align-items:center; gap:8px}
+    .live .pill{font-size:12px; padding:6px 10px; border:1px solid var(--border); border-radius:999px; background:linear-gradient(180deg, #0c152b, #0a1122)}
+    .page{max-width:1100px; margin:24px auto; padding:0 18px; display:grid; grid-template-columns: 1fr; gap:16px}
+    @media(min-width:980px){ .page{grid-template-columns: 300px 1fr} }
+    .side{position:sticky; top: calc(var(--topbarH, 60px) + 24px); align-self:start; display:flex; flex-direction:column; gap:14px}
+    .card{
+      background: linear-gradient(180deg, rgba(11,19,36,.86), rgba(9,18,37,.82));
+      border:1px solid var(--border); border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      backdrop-filter: blur(6px) saturate(120%);
+      -webkit-backdrop-filter: blur(6px) saturate(120%);
+    }
+    .card .hd{padding:14px 16px; border-bottom:1px solid var(--border); font-weight:700; display:flex; align-items:center; gap:10px}
+    .card .bd{padding:14px 16px}
+    .quick{display:flex; flex-wrap:wrap; gap:10px}
+    .chip{
+      border:1px solid var(--border); color:var(--text);
+      background:linear-gradient(180deg, rgba(18,28,56,.85), rgba(12,20,42,.65));
+      padding:10px 14px; border-radius:12px; cursor:pointer;
+      transition:.18s transform, .18s box-shadow, .18s background;
+      box-shadow:0 6px 16px rgba(100,120,255,.12); font: inherit;
+    }
+    .chip:hover{transform:translateY(-1px); box-shadow:0 8px 20px rgba(100,120,255,.18)}
+    .muted-text { color: var(--muted); font-size: 12px; margin-top: 10px; line-height: 1.5; }
+    .small-text { font-size: 14px; }
+    .chat-section { display: flex; flex-direction: column; min-height: 70vh; }
+    .chat-bd { padding: 0; flex-grow: 1; display: flex; flex-direction: column; }
+    .chatwrap{
+      flex-grow: 1; overflow-y:auto; padding:18px;
+      border-bottom:1px solid var(--border); scroll-behavior:smooth;
+      overscroll-behavior:contain; -webkit-overflow-scrolling:touch; contain:layout paint;
+      touch-action: pan-y; min-height: 300px;
+    }
+    .chat{display:flex; flex-direction:column; gap:14px}
+    .msg{display:grid; grid-template-columns:40px 1fr; gap:12px; align-items:flex-start}
+    .msg .avatar{width:40px; height:40px; border-radius:12px; display:grid; place-items:center; background:#0f1a33; border:1px solid var(--border); flex-shrink: 0;}
+    .msg .bubble{border:1px solid var(--border); border-radius:16px; padding:12px 14px; line-height:1.65; box-shadow:var(--shadow); word-wrap: break-word; overflow-wrap: break-word;}
+    .from-user{grid-template-columns:1fr 40px}
+    .from-user .avatar{order:2}
+    .from-user .bubble{order:1; justify-self:end; background:linear-gradient(180deg, var(--bubble-user), #0b1731)}
+    .from-bot .bubble{background:linear-gradient(180deg, var(--bubble-bot), #0a1328)}
+    /* Kaynaklar gizli DEĞİL */
+    .srcs{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .src{font-size:12px; padding:6px 10px; border:1px dashed var(--border); border-radius:999px; color:#d7e0f3; background:rgba(10,16,32,.35)}
+    .actions{display:flex; gap:10px; margin-top:10px}
+    .btn{
+      display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:12px;
+      border:1px solid var(--border); background:linear-gradient(180deg, #0d1a34, #0a1328);
+      cursor:pointer; font-weight:700; color: var(--text); font: inherit;
+    }
+    .btn .dot{width:10px;height:10px;border-radius:50%}
+    .btn.ok .dot{background:radial-gradient(circle at 30% 30%, #c7d2fe, var(--accent))}
+    .btn.no .dot{background:radial-gradient(circle at 30% 30%, #fecaca, var(--no))}
+    .btn:disabled{opacity:.6; cursor:not-allowed}
+    .btn.ok{border-color:rgba(124,140,255,.4); background:linear-gradient(180deg, rgba(124,140,255,.22), rgba(124,140,255,.08)); color:#eef2ff;}
+    .btn.no{border-color:rgba(239,68,68,.35); background:linear-gradient(180deg, rgba(239,68,68,.18), rgba(239,68,68,.06)); color:#ffe4e6;}
+    .btn.ok.active{background:linear-gradient(180deg,#7c8cff,#6366f1); color:#0b1020; border-color:#7c8cff}
+    .btn.no.active{background:linear-gradient(180deg,#ef4444,#b91c1c); color:#2b0b0b; border-color:#ef4444}
+    .composer{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:end; padding:12px 18px; border-top: 1px solid var(--border);}
+    .input{display:flex; background:linear-gradient(180deg, var(--panel), var(--panel-2)); border:1px solid var(--border); border-radius:var(--radius); padding:12px; box-shadow:var(--shadow)}
+    textarea{
+      flex:1; resize:none; border:0; outline:none; background:transparent; color:var(--text);
+      font-size:15px; line-height:1.55; font: inherit;
+      max-height: calc(1.55em * 6 + 24px); min-height: calc(1.55em + 24px);
+    }
+    .send{
+      padding:14px 18px; border-radius:12px; border:1px solid rgba(124,140,255,.45);
+      color:#0b1020; background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      font-weight:800; letter-spacing:.2px; cursor:pointer;
+      box-shadow:0 6px 22px rgba(96,165,250,.35); font: inherit;
+      height: calc(1.55em + 28px);
+    }
+    .send[disabled]{opacity:.6; cursor:not-allowed}
+    .skeleton{border-radius:12px; height:14px; background:linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.12), rgba(255,255,255,.06)); background-size:200% 100%; animation:shimmer 1.2s infinite}
+    @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+    code, pre{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:13px}
+    pre{white-space:pre-wrap; margin:8px 0 0; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 8px; border: 1px solid var(--border);}
+    a{color:#a7b7ff}
+    .safe-bottom{height:env(safe-area-inset-bottom, 0)}
+    @media(max-width:980px){
+      .page{grid-template-columns:1fr; gap:12px; margin:10px auto; padding:0 10px}
+      .side{display:none}
+      .card{border-radius:16px}
+      .chatwrap{
+        border:0; padding:12px 10px 6px;
+        height:calc(var(--vh, 1vh) * 100 - var(--topbarH, 60px) - var(--composerH, 90px) - env(safe-area-inset-bottom, 0px));
+        max-height:calc(var(--vh, 1vh) * 100 - var(--topbarH, 60px) - var(--composerH, 90px) - env(safe-area-inset-bottom, 0px));
+      }
+      .composer{
+        position:sticky; bottom:0;
+        background:linear-gradient(180deg, rgba(2,6,23,.6), rgba(2,6,23,.95));
+        backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+        padding:10px 12px; border-top: 0;
+      }
+      .input{padding:10px; border-radius: 16px;}
+      textarea{font-size:16px; min-height: calc(1.55em + 20px); max-height: calc(1.55em * 6 + 20px);}
+      .send{padding:12px 14px; height: calc(1.55em + 24px);}
+      .topwrap{ padding:10px 12px 10px 56px; }
+      .logo{ width:28px; height:28px; }
+    }
+    .chipsbar{
+      position:fixed; left:0; right:0;
+      bottom:calc(var(--composerH, 90px) + env(safe-area-inset-bottom, 0px) + 6px);
+      z-index:6; padding:6px 8px; display:none;
+    }
+    @media(max-width:980px){ .chipsbar{display:block} }
+    .chipsbar .rail{
+      display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+      padding:6px 8px; border-radius:14px;
+      background:linear-gradient(180deg, rgba(8,14,32,.75), rgba(8,14,32,.45));
+      border:1px solid var(--border); box-shadow:var(--shadow);
+      scrollbar-width: none;
+    }
+    .chipsbar .rail::-webkit-scrollbar{display:none}
+    .chipsbar .chip{white-space:nowrap; padding:10px 12px; flex-shrink: 0;}
+    .fab{
+      position:fixed; right:14px;
+      bottom:calc(var(--composerH, 90px) + env(safe-area-inset-bottom, 0px) + 56px);
+      width:46px; height:46px; border-radius:50%; display:grid; place-items:center;
+      border:1px solid var(--border); background:linear-gradient(180deg,#0c1628,#0b1220);
+      box-shadow:0 10px 24px rgba(0,0,0,.35); opacity:0; pointer-events:none;
+      transition:opacity .2s ease; cursor:pointer; color: var(--text); font-size: 1.2em;
+      -webkit-tap-highlight-color: transparent; padding: 0;
+    }
+    .fab.show{opacity:1; pointer-events:auto}
+    .toast{
+      position:fixed; left:50%; bottom:calc(var(--composerH, 90px) + env(safe-area-inset-bottom, 0px) + 8px);
+      transform:translateX(-50%);
+      background:#0b1220; color:#e8ecff; border:1px solid var(--border);
+      padding:10px 14px; border-radius:12px; box-shadow:var(--shadow);
+      opacity:0; transition:opacity .2s ease, transform .2s ease; z-index:7;
+      pointer-events: none;
+    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-6px)}
+    .drawer{
+      position:fixed; inset:0 auto 0 0; width:260px; max-width:80%;
+      transform:translateX(-105%); transition:transform .22s ease-out;
+      background: linear-gradient(180deg, rgba(11, 19, 36, .90), rgba(9, 18, 37, .85));
+      border-right:1px solid var(--border); box-shadow:var(--shadow);
+      z-index:20; display:flex; flex-direction:column;
+      backdrop-filter: blur(8px) saturate(130%);
+      -webkit-backdrop-filter: blur(8px) saturate(130%);
+    }
+    .drawer.open{ transform:translateX(0) }
+    .drawer .dw-hd{ padding:14px 16px; border-bottom:1px solid var(--border); font-weight:800; letter-spacing:.3px }
+    .drawer .dw-bd{ padding:10px 8px; display:flex; flex-direction:column; gap:8px }
+    .drawer .item{
+      display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px;
+      border:1px solid var(--border); background:linear-gradient(180deg,#0c162a,#0a1222);
+      color:var(--text); cursor:pointer; font-weight:600; font: inherit; text-align: left;
+    }
+    .drawer .item:hover{ background:linear-gradient(180deg,#0e1a30,#0b1426) }
+    .backdrop{
+      position:fixed; inset:0; background:rgba(2,8,23,.45);
+      backdrop-filter:blur(2px); -webkit-backdrop-filter: blur(2px);
+      opacity:0; pointer-events:none; transition:opacity .16s ease-out; z-index:19;
+    }
+    .backdrop.show{ opacity:1; pointer-events:auto }
+  </style>
+</head>
+<body>
+
+  <div id="cosmic-bg"><canvas id="cosmic-canvas"></canvas></div>
+
+  <header class="topbar" id="topbar">
+    <div class="hambox">
+      <button id="hamburger" class="hamburger" aria-label="Menüyü aç/kapat">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="topwrap">
+      <a class="brand" href="/" aria-label="Fırat Üniversitesi Asistanı">
+        <img class="logo" id="brandLogo" src="/static/firat-logo.png" alt="Fırat Üniversitesi Logosu" />
+        <div class="title">Fırat Üniversitesi Asistanı</div>
+      </a>
+      <div class="live"><span class="pill">live</span></div>
+    </div>
+  </header>
+
+  <main class="page">
+    <aside class="side">
+      <section class="card">
+        <div class="hd">Hızlı Butonlar</div>
+        <div class="bd">
+          <div class="quick" id="quick">
+            <button class="chip" data-val="geçme notu">geçme notu</button>
+            <button class="chip" data-val="devamsızlık durumu">devamsızlık durumu</button>
+            <button class="chip" data-val="danışman">danışman</button>
+            <button class="chip" data-val="program">program</button>
+            <button class="chip" data-val="itiraz">itiraz</button>
+          </div>
+          <p class="muted-text">Birine tıkladığında, içeriği anında gönderir.</p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="hd">İpuçları</div>
+        <div class="bd muted-text small-text">
+          • Soru yazarken <b>devamsızlık, not, vb.</b> gibi anahtarlar kullan.<br/>
+          • <b>Shift+Enter</b> ile yeni satır, <b>Enter</b> ile gönder.<br/>
+          • Sorunuzu <b>net ve karmaşık olmayan</b> ifadelerle sorun.<br/>
+          • Öneri/eleştiri: <b>yigtwx666@gmail.com</b>
+        </div>
+      </section>
+    </aside>
+
+    <section class="card chat-section">
+      <div class="bd chat-bd">
+        <div id="chat" class="chatwrap">
+          <div class="chat" id="chatList">
+            <article class="msg from-bot" aria-live="polite">
+              <div class="avatar">🤖</div>
+              <div class="bubble">
+                <div>Selam! Bana üniversite ile alakalı her şeyi sorabilirsin ama unutma ki ben ChatGPT kadar iyi değilim :DD.</div>
+                <div class="actions">
+                  <button class="btn ok" aria-label="Beğendim"><span class="dot"></span>Beğendim</button>
+                  <button class="btn no" aria-label="Beğenmedim"><span class="dot"></span>Beğenmedim</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="composer" id="composer">
+          <div class="input">
+            <textarea id="q" placeholder="Sorunuzu yazın… (Enter: gönder, Shift+Enter: satır)" spellcheck="false" rows="1"></textarea>
+          </div>
+          <button id="send" class="send" aria-label="Gönder">Sor</button>
+          <div class="safe-bottom"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="chipsbar" class="chipsbar"><div class="rail" id="chipsrail"></div></div>
+  <button id="fabDown" class="fab" aria-label="En alta in">⬇️</button>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <aside id="miniDrawer" class="drawer" aria-hidden="true">
+    <div class="dw-hd">Menü</div>
+    <div class="dw-bd">
+      <button class="item" id="dw-new">🧹 Yeni sohbet</button>
+      </div>
+  </aside>
+  <div id="drawerBackdrop" class="backdrop" tabindex="-1"></div>
+
+  <script>
+    // Ana Chatbot Arayüz Mantığı
+    (function() {
+      // Elementleri seç
+      const chatWrap = document.getElementById('chat');
+      const chatList = document.getElementById('chatList');
+      const qEl = document.getElementById('q');
+      const sendBtn = document.getElementById('send');
+      const topbar = document.getElementById('topbar');
+      const composer = document.getElementById('composer');
+      const quickPanel = document.getElementById('quick');
+      const chipsRail = document.getElementById('chipsrail');
+      const fab = document.getElementById('fabDown');
+      const toast = document.getElementById('toast');
+      const hamburger = document.getElementById('hamburger');
+      const drawer = document.getElementById('miniDrawer');
+      const backdrop = document.getElementById('drawerBackdrop');
+      const drawerNew = document.getElementById('dw-new');
+      const drawerReindex = document.getElementById('dw-reindex');
+
+      // Yardımcı Fonksiyonlar
+      function el(html) { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; }
+      function escapeHtml(str) { return String(str || '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+      function md(s) {
+        s = escapeHtml(s);
+        s = s.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+        s = s.replace(/\*(.*?)\*/g, '<i>$1</i>');
+        s = s.replace(/`{3}([\s\S]*?)`{3}/g, (match, p1) => `<pre>${p1.trim()}</pre>`);
+        s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+        s = s.replace(/(?:\r\n|\r|\n)/g, '<br>');
+        s = s.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+        return s;
+      }
+      function scrollBottom() { requestAnimationFrame(() => { chatWrap.scrollTop = chatWrap.scrollHeight; }); }
+      function showToast(msg) {
+        if (!toast) return;
+        toast.textContent = msg; toast.classList.add('show');
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(() => toast.classList.remove('show'), 1500);
+      }
+      function vibrate(duration = 10) { navigator.vibrate?.(duration); }
+
+      // Mesaj Ekleme Fonksiyonları
+      function addMessage(html) {
+        const node = el(html); chatList.appendChild(node); scrollBottom();
+        requestAnimationFrame(resizeChatArea); return node;
+      }
+      function msgUser(text) {
+        return addMessage(`
+          <article class="msg from-user">
+            <div class="bubble">${escapeHtml(text)}</div>
+            <div class="avatar">🧑</div>
+          </article>`);
+      }
+      function msgBotSkeleton() {
+        return addMessage(`
+          <article class="msg from-bot" id="loading-msg" aria-live="assertive" aria-label="Bot cevap veriyor">
+            <div class="avatar">🤖</div>
+            <div class="bubble">
+              <div class="skeleton" style="width:70%"></div>
+              <div class="skeleton" style="width:90%; margin-top:8px"></div>
+              <div class="skeleton" style="width:40%; margin-top:8px"></div>
+            </div>
+          </article>`);
+      }
+      // ----- DEĞİŞİKLİK BURADA -----
+      function msgBot(answer, sources) {
+        // Kaynaklar artık gösterilmiyor. İstersen bu satırı tekrar aktif edebilirsin:
+        // const srcHtml = (sources || []).map(s => `<span class="src">${escapeHtml(s)}</span>`).join('');
+        return addMessage(`
+          <article class="msg from-bot" aria-live="polite">
+            <div class="avatar">🤖</div>
+            <div class="bubble">
+              <div>${md(answer)}</div>
+              ${'' /* Kaynaklar HTML'den kaldırıldı: sources && sources.length > 0 ? `<div class="srcs">${srcHtml}</div>` : '' */}
+              <div class="actions">
+                <button class="btn ok" aria-label="Beğendim"><span class="dot"></span>Beğendim</button>
+                <button class="btn no" aria-label="Beğenmedim"><span class="dot"></span>Beğenmedim</button>
+              </div>
+            </div>
+          </article>`);
+      }
+      // -----------------------------
+
+      // API İsteği
+      async function ask(text) {
+        text = text.trim(); if (!text) return;
+        sendBtn.disabled = true; qEl.disabled = true;
+        msgUser(text); const loader = msgBotSkeleton();
+        try {
+          const response = await fetch('/ask', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: text }) });
+          const data = await response.json();
+          loader?.remove();
+          if (!response.ok) {
+            const errorMsg = data.answer || data.detail || `Sunucu hatası: ${response.status}`;
+            throw new Error(errorMsg);
+          }
+          if (data.error) { msgBot(`⚠️ **Hata:** ${escapeHtml(data.error)}`, []); }
+          else { msgBot(data.answer || 'Boş cevap alındı.', data.sources || []); }
+        } catch (e) {
+          loader?.remove(); console.error("Fetch/API hatası:", e);
+          let userErrorMessage = "İstek gönderilirken veya sunucudan cevap alınırken bir sorun oluştu.";
+          if (e instanceof Error) { userErrorMessage += ` (${escapeHtml(e.message)})`; }
+          else { userErrorMessage += ` (${escapeHtml(String(e))})`; }
+          msgBot(`⚠️ **Hata:** ${userErrorMessage}`, []);
+        } finally {
+          qEl.value = ''; sendBtn.disabled = false; qEl.disabled = false; autosize(); qEl.focus(); scrollBottom();
+        }
+      }
+
+      // Olay Dinleyicileri
+      qEl.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendBtn.click(); } });
+      sendBtn.addEventListener('click', () => ask(qEl.value));
+
+      function quickButtonHandler(e) {
+          const b = e.target.closest('.chip'); if (!b) return;
+          const question = b.dataset.val || b.textContent.trim(); qEl.value = question; ask(question); vibrate();
+          if (isMobile()) toggleDrawer(false);
+      }
+      quickPanel?.addEventListener('click', quickButtonHandler);
+      chipsRail?.addEventListener('click', quickButtonHandler);
+
+      chatList.addEventListener('click', (e) => {
+        const btn = e.target.closest('.actions .btn'); if (!btn || btn.classList.contains('active')) return;
+        const box = btn.closest('.actions'); box.querySelectorAll('.btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+        const val = btn.classList.contains('ok') ? 'like' : 'dislike'; console.log('Geri bildirim:', val);
+        showToast(btn.classList.contains('ok') ? 'Beğenildi 👍' : 'Beğenilmedi 👎'); vibrate();
+      });
+
+      chatList.addEventListener('click', (e) => {
+        if (!isMobile()) return; const bubble = e.target.closest('.msg .bubble');
+        if (!bubble || e.target.closest('.actions') || e.target.closest('a')) return;
+        const contentToCopy = bubble.querySelector('div:first-child'); if (!contentToCopy) return;
+        const textToCopy = contentToCopy.innerText || contentToCopy.textContent || "";
+        navigator.clipboard?.writeText(textToCopy.trim())
+          .then(() => showToast('Mesaj kopyalandı'))
+          .catch(err => { console.error('Kopyalama hatası:', err); showToast('Kopyalanamadı'); });
+      });
+
+      /* ======= MOBİL STABİLİTE VE DİNAMİK BOYUTLANDIRMA ======= */
+      function setVH() { const vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight) * 0.01; document.documentElement.style.setProperty('--vh', `${vh}px`); }
+      function setChromeVars() {
+        const tbH = topbar ? Math.ceil(topbar.getBoundingClientRect().height) : 60; const compH = composer ? Math.ceil(composer.getBoundingClientRect().height) : 90;
+        document.documentElement.style.setProperty('--topbarH', tbH + 'px'); document.documentElement.style.setProperty('--composerH', compH + 'px');
+      }
+      function resizeChatArea() {
+        const vv = window.visualViewport; const viewportH = vv ? vv.height : window.innerHeight;
+        const tbH = topbar.getBoundingClientRect().height; const compH = composer.getBoundingClientRect().height;
+        const safeBottom = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('env(safe-area-inset-bottom)')) || 0;
+        const extraSpace = isMobile() ? 10 + 6 : 18 + 18; const desiredH = viewportH - (tbH + compH + safeBottom + extraSpace);
+        const finalH = Math.max(240, desiredH);
+        chatWrap.style.height = finalH + 'px'; chatWrap.style.maxHeight = finalH + 'px'; setChromeVars();
+      }
+      function autosize() {
+        qEl.style.height = 'auto'; const maxH = parseFloat(getComputedStyle(qEl).maxHeight) || 160;
+        const newHeight = Math.min(qEl.scrollHeight + 2, maxH); qEl.style.height = newHeight + 'px'; setChromeVars(); resizeChatArea();
+      }
+      if (window.visualViewport) { window.visualViewport.addEventListener('resize', () => { setVH(); setChromeVars(); resizeChatArea(); scrollBottom(); }, { passive: true }); }
+      qEl.addEventListener('input', autosize);
+      qEl.addEventListener('focus', () => { setTimeout(() => { resizeChatArea(); scrollBottom(); }, 150); });
+      window.addEventListener('load', () => { setVH(); setChromeVars(); resizeChatArea(); autosize(); setTimeout(() => { setVH(); setChromeVars(); resizeChatArea(); }, 150); });
+      window.addEventListener('orientationchange', () => setTimeout(() => { setVH(); setChromeVars(); resizeChatArea(); }, 150));
+      window.addEventListener('resize', () => { setVH(); setChromeVars(); resizeChatArea(); });
+
+      /* Mobil hızlı çipler / FAB */
+      const MOBILE_BP = 980; function isMobile() { return window.innerWidth < MOBILE_BP; }
+      function buildChipsBar() {
+        if (!chipsRail || !quickPanel) return; chipsRail.innerHTML = '';
+        quickPanel.querySelectorAll('.chip').forEach(ch => { const b = ch.cloneNode(true); chipsRail.appendChild(b); });
+      }
+      function onScroll() { const scrollOffset = chatWrap.scrollHeight - chatWrap.scrollTop - chatWrap.clientHeight; fab?.classList.toggle('show', scrollOffset > 100 && isMobile()); }
+      chatWrap.addEventListener('scroll', onScroll, { passive: true });
+      fab?.addEventListener('click', () => { chatWrap.scrollTo({ top: chatWrap.scrollHeight, behavior: 'smooth' }); vibrate(); });
+      window.addEventListener('load', () => { if (isMobile()) buildChipsBar(); onScroll(); });
+      window.addEventListener('resize', () => { if (isMobile()) buildChipsBar(); onScroll(); });
+
+      /* ======= DRAWER (Yan Menü) KONTROL ======= */
+      function toggleDrawer(open) {
+        if (!drawer || !backdrop) return;
+        const willOpen = (open === undefined ? !drawer.classList.contains('open') : open);
+        drawer.classList.toggle('open', willOpen); backdrop.classList.toggle('show', willOpen);
+        drawer.setAttribute('aria-hidden', String(!willOpen)); document.body.style.overflow = willOpen ? 'hidden' : '';
+        if (willOpen && drawerNew) { setTimeout(() => drawerNew.focus(), 50); }
+      }
+      hamburger?.addEventListener('click', () => toggleDrawer());
+      backdrop?.addEventListener('click', () => toggleDrawer(false));
+      window.addEventListener('keydown', (e) => { if (e.key === 'Escape') toggleDrawer(false); });
+
+      // Drawer Menü Aksiyonları
+      drawerNew?.addEventListener('click', () => {
+        chatList.innerHTML = ''; msgBot('Yeni bir sohbete başladık. Sorunu bekliyorum! ✨', []); toggleDrawer(false); showToast('Yeni sohbet oluşturuldu'); qEl?.focus();
+      });
+
+
+      // İlk Yükleme Ayarları
+      setVH(); setChromeVars(); resizeChatArea(); autosize(); scrollBottom();
+    })(); // Ana IIFE sonu
+  </script>
+
+  <script>
+    // Canvas Animasyon Kodu (Değişiklik Yok)
+    (() => {
+      const root = document.getElementById('cosmic-bg');
+      const canvas = document.getElementById('cosmic-canvas');
+      if (!root || !canvas || !canvas.getContext) { console.warn("Canvas background could not be initialized."); return; }
+      const ctx = canvas.getContext('2d');
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      const DOT_BASE_DENSITY = 0.00012; const DOT_SIZE = [1.0, 2.2]; const SPEED = [0.08, 0.34]; const LINK_DIST = 150; const MOUSE_PULL = 0.12; const PARALLAX = 0.03; const TAIL_FADE = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--bg-fade')) || 0.08;
+      let W = 0, H = 0, dots = [], mouse = { x: null, y: null };
+      const palette = [ { dot: [170, 140, 255], line: [150, 160, 255], glow: [170, 150, 255] }, { dot: [255, 140, 210], line: [255, 120, 200], glow: [255, 150, 220] }, { dot: [130, 150, 255], line: [120, 170, 255], glow: [150, 170, 255] }, { dot: [110, 140, 230], line: [90, 150, 240], glow: [120, 160, 240] }, { dot: [170, 140, 255], line: [150, 160, 255], glow: [170, 150, 255] } ];
+      let pIndex = 0, pNext = 1, t = 0; const cycleMs = 9000;
+      function lerp(a, b, u) { return a + (b - a) * u; } function mixRGB(a, b, u) { return [Math.round(lerp(a[0], b[0], u)), Math.round(lerp(a[1], b[1], u)), Math.round(lerp(a[2], b[2], u))]; } function rgbStr(arr, alpha = 1) { return `rgba(${arr[0]},${arr[1]},${arr[2]},${alpha})`; }
+      function updateThemeColors(u) { const A = palette[pIndex], B = palette[pNext]; const dot = mixRGB(A.dot, B.dot, u); const line = mixRGB(A.line, B.line, u); const glow = mixRGB(A.glow, B.glow, u); document.documentElement.style.setProperty('--bg-dot', rgbStr(dot, .95)); document.documentElement.style.setProperty('--bg-line', rgbStr(line, .28)); document.documentElement.style.setProperty('--bg-glow', `${glow[0]}, ${glow[1]}, ${glow[2]}`); return { dot, line, glow }; }
+      function resize() { const rect = root.getBoundingClientRect(); W = Math.max(1, rect.width | 0); H = Math.max(1, rect.height | 0); canvas.width = (W * DPR) | 0; canvas.height = (H * DPR) | 0; canvas.style.width = W + 'px'; canvas.style.height = H + 'px'; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); const target = Math.round(W * H * DOT_BASE_DENSITY); if (dots.length < target) { while (dots.length < target) dots.push(makeDot()); } else if (dots.length > target) { dots.length = target; } }
+      function rand(min, max) { return Math.random() * (max - min) + min; } function makeDot() { return { x: Math.random() * W, y: Math.random() * H, vx: rand(SPEED[0], SPEED[1]) * (Math.random() < .5 ? -1 : 1), vy: rand(SPEED[0], SPEED[1]) * (Math.random() < .5 ? -1 : 1), r: rand(DOT_SIZE[0], DOT_SIZE[1]), phase: Math.random() * Math.PI * 2 }; }
+      let lastTs = performance.now(); let animationFrameId = null; function fadeFrame() { ctx.fillStyle = `rgba(10, 15, 28, ${TAIL_FADE})`; ctx.fillRect(0, 0, W, H); }
+      function step(now) { const dt = Math.min(60, now - lastTs); lastTs = now; t += dt / cycleMs; if (t >= 1) { t %= 1; pIndex = pNext; pNext = (pNext + 1) % palette.length; } const mix = updateThemeColors(t); const DOT_COLOR = rgbStr(mix.dot, 0.95); const LINE_COLOR = rgbStr(mix.line, 0.28); const GLOW_RGB = mix.glow; fadeFrame(); const mx = mouse.x == null ? 0 : (mouse.x - W / 2) * PARALLAX; const my = mouse.y == null ? 0 : (mouse.y - H / 2) * PARALLAX; ctx.lineWidth = 1; ctx.strokeStyle = LINE_COLOR;
+        for (let d of dots) { d.phase += 0.005; d.x += d.vx + Math.cos(d.phase) * 0.15; d.y += d.vy + Math.sin(d.phase) * 0.15; if (d.x < -20) d.x = W + 20; else if (d.x > W + 20) d.x = -20; if (d.y < -20) d.y = H + 20; else if (d.y > H + 20) d.y = -20; if (mouse.x != null) { const dx = (mouse.x - d.x), dy = (mouse.y - d.y); const distSq = dx * dx + dy * dy; if (distSq < 200 * 200) { const force = MOUSE_PULL / Math.sqrt(distSq || 1); d.x -= dx * force; d.y -= dy * force; } } }
+        ctx.beginPath(); for (let i = 0; i < dots.length; i++) { const a = dots[i]; for (let j = i + 1; j < dots.length; j++) { const b = dots[j]; const dx = (a.x - b.x), dy = (a.y - b.y); const dist = Math.hypot(dx, dy); if (dist < LINK_DIST) { ctx.globalAlpha = Math.max(0, 1 - (dist / LINK_DIST)); ctx.moveTo(a.x + mx, a.y + my); ctx.lineTo(b.x + mx, b.y + my); } } } ctx.stroke(); ctx.globalAlpha = 1;
+        for (let d of dots) { const gx = d.x + mx, gy = d.y + my; const grad = ctx.createRadialGradient(gx, gy, 0, gx, gy, d.r * 5); grad.addColorStop(0, `rgba(${GLOW_RGB[0]},${GLOW_RGB[1]},${GLOW_RGB[2]}, .42)`); grad.addColorStop(1, `rgba(${GLOW_RGB[0]},${GLOW_RGB[1]},${GLOW_RGB[2]}, 0)`); ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(gx, gy, d.r * 4, 0, Math.PI * 2); ctx.fill(); ctx.fillStyle = DOT_COLOR; ctx.beginPath(); ctx.arc(gx, gy, d.r, 0, Math.PI * 2); ctx.fill(); }
+        animationFrameId = requestAnimationFrame(step);
+      }
+      function startAnimation() { if (animationFrameId) cancelAnimationFrame(animationFrameId); lastTs = performance.now(); fadeFrame(); animationFrameId = requestAnimationFrame(step); } function stopAnimation() { if (animationFrameId) { cancelAnimationFrame(animationFrameId); animationFrameId = null; } } function setup() { resize(); startAnimation(); document.addEventListener('visibilitychange', () => { if (document.hidden) stopAnimation(); else startAnimation(); }); }
+      window.addEventListener('resize', resize, { passive: true }); window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true }); window.addEventListener('mouseleave', () => { mouse.x = mouse.y = null; }); window.addEventListener('touchstart', e => { if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; } }, { passive: true }); window.addEventListener('touchend', () => { mouse.x = mouse.y = null; }); window.addEventListener('touchmove', e => { if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; } }, { passive: true });
+      setup();
+    })(); // Canvas IIFE sonu
+  </script>
+
+</body>
+</html>
