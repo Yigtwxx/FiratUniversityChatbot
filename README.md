@@ -272,9 +272,11 @@ Released under the **MIT License**. See `LICENSE` for details.
 **Yiğit Erdoğan (Yigtwxx)**
 📧 [yigiterdogan6@icloud.com](mailto:yigiterdogan6@icloud.com)
 
+
 🧠 Focus Areas: Deep Learning • Computer Vision • Data Science
 
 ---
+LinkedIn: [Yiğit ERDOĞAN](www.linkedin.com/in/yiğit-erdoğan-ba7a64294)
 
 ## 🙌 Acknowledgements
 
