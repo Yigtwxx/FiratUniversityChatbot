@@ -64,7 +64,8 @@ The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**,
 ├─ .env.example               # Environment variables (see below)
 ├─ docs/                      # Your local PDF corpus (input only)
 ├─ templates/
-│   └─ chat.html              # Chat UI (minimal, mobile-stable)
+│   └─ index.html             # Chat UI (minimal, mobile-stable)
+│   └─ style.css              # Chat UI (minimal, mobile-stable)
 ├─ static/
 │   └─ firat-logo.png         # App/brand icon
 └─ README.md                  # You are here
