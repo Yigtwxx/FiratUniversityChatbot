@@ -27,7 +27,6 @@ The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**,
  <img width="1424" height="924" alt="Ekran görüntüsü 2025-11-05 203328" src="https://github.com/user-attachments/assets/2cce67af-5eda-4266-8788-add8068dd1f3" />
   <a href="https://yigtwx-firat-universitesi-chatbotv4.hf.space/chat" rel="nofollow">Firat University Chatbot</a>
 
-
 ---
 
 ## ✨ Key Features
