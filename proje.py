@@ -23,6 +23,7 @@ import unicodedata
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 import difflib
+import logging
 
 import pdfplumber  # pip install pdfplumber
 from fastapi import Body, FastAPI, Request
@@ -716,7 +717,8 @@ def ask(body: dict = Body(default={})):
         return JSONResponse({"answer": ans, "sources": [src], "error": None})
 
     except Exception as e:
-        return JSONResponse({"answer": "", "sources": [], "error": f"{type(e).__name__}: {e}"})
+        logging.exception("Exception during /ask endpoint processing")
+        return JSONResponse({"answer": "", "sources": [], "error": "Beklenmeyen bir hata oluştu."})
 
 @app.post("/reindex")
 def reindex():
