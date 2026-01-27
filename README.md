@@ -20,7 +20,6 @@ Fırat University Assistant: An offline Turkish question-answering and document 
 ![Stars](https://img.shields.io/github/stars/Yigtwxx/FiratUniversityChatbot)
 
 
-
 A **local, offline** Turkish **document search & Q&A** assistant built for Fırat University resources.
 The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**, builds a lightweight **BM25** index with Turkish-aware normalization, and answers users via a minimal **FastAPI** web UI.
 
