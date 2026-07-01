@@ -73,7 +73,7 @@ The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**,
 
 ---
 
-## ⚙️ Requirements
+##  Requirements
 
 * **Python** 3.10+
 * See `requirements.txt`:
