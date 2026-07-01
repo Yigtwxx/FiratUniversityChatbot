@@ -153,7 +153,7 @@ Set the following **Variables** under *Settings → Variables*:
 
 ---
 
-## 🛰️ API Endpoints
+##  API Endpoints
 
 ### `POST /ask`
 
