@@ -214,7 +214,7 @@ Returns counts and basic status:
 
 ---
 
-## 🧪 Quick Test (cURL)
+##  Quick Test (cURL)
 
 ```bash
 curl -s -X POST http://localhost:7860/ask \
