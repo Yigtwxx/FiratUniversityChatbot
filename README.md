@@ -277,7 +277,7 @@ Released under the **MIT License**. See `LICENSE` for details.
 ---
 LinkedIn: [Yiğit ERDOĞAN](www.linkedin.com/in/yiğit-erdoğan-ba7a64294)
 
-## 🙌 Acknowledgements
+##  Acknowledgements
 
 * **pdfplumber** for PDF parsing
 * **FastAPI** for the HTTP/API layer
