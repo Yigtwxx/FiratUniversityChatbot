@@ -251,7 +251,7 @@ curl -s -X POST http://localhost:7860/ask \
 
 ---
 
-## 🗺️ Roadmap
+##  Roadmap
 
 * Optional FAISS layer for hybrid keyword-vector retrieval.
 * Per-document filters (faculty, year, regulation).
