@@ -260,7 +260,7 @@ curl -s -X POST http://localhost:7860/ask \
 
 ---
 
-## 📜 License
+##  License
 
 Released under the **MIT License**. See `LICENSE` for details.
 
