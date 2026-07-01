@@ -203,7 +203,7 @@ Returns counts and basic status:
 
 ---
 
-## 🧩 Implementation Highlights
+##  Implementation Highlights
 
 * **Text normalization:** TR ASCII lowering, bullet & soft hyphen cleanup, smart line merges.
 * **Tokenizer & stemmer:** Minimal & conservative to avoid over-stemming Turkish tokens.
