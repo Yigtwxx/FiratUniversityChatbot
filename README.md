@@ -243,7 +243,7 @@ curl -s -X POST http://localhost:7860/ask \
 
 ---
 
-## 🔐 Data & Safety Notes
+##  Data & Safety Notes
 
 * The assistant **never** reaches the internet and **never** answers outside your **local PDFs**.
 * No personal data is stored beyond logs (if `DEBUG=1`).
