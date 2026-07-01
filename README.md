@@ -138,7 +138,7 @@ Open: `http://localhost:7860/chat`
 
 ---
 
-## 🌐 Deploy on Hugging Face Spaces
+##  Deploy on Hugging Face Spaces
 
 **Recommended Space Type:** *Docker* or *Python (FastAPI)*.
 Set the following **Variables** under *Settings → Variables*:
