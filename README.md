@@ -90,7 +90,7 @@ The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**,
 
 ---
 
-## 🔧 Configuration (Environment)
+##  Configuration (Environment)
 
 Create a `.env` file (or set environment variables in your platform):
 
