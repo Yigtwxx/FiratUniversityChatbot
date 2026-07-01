@@ -40,7 +40,7 @@ The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**,
 
 ---
 
-## 🧠 How It Works (Pipeline)
+##  How It Works (Pipeline)
 
 1. **Ingestion:** PDFs from `DOCS_DIR` (default `./docs`) are parsed with fallback strategies:
 
