@@ -53,7 +53,7 @@ The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**,
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 .
