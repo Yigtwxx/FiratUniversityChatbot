@@ -224,7 +224,7 @@ curl -s -X POST http://localhost:7860/ask \
 
 ---
 
-## ❗ Troubleshooting
+##  Troubleshooting
 
 * **No answers returned**
 
