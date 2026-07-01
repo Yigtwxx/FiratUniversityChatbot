@@ -28,7 +28,7 @@ The app reads **only local PDFs** in `docs/`, extracts text with **pdfplumber**,
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 * **Offline by design:** No internet calls; answers come strictly from local PDFs in `docs/`.
 * **Robust PDF parsing:** Single/dual column detection, header/footer removal, word-box line assembly, hyphen fixups.
