@@ -195,7 +195,7 @@ Returns counts and basic status:
 
 ---
 
-## 💡 Query Tips (Turkish)
+##  Query Tips (Turkish)
 
 * Try short **keywords**: “geçme notu”, “devamsızlık”, “itiraz”, “danışman”, “program”, “transkript”.
 * Short aliases supported: **but** → bütünleme, **trans** → transkript, **obs** → öğrenci bilgi sistemi.
