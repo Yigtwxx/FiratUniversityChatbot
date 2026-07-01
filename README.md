@@ -266,7 +266,7 @@ Released under the **MIT License**. See `LICENSE` for details.
 
 ---
 
-## 💬 Author
+##  Author
 
 **Yiğit Erdoğan (Yigtwxx)**
  [yigiterdogan6@icloud.com](mailto:yigiterdogan6@icloud.com)
