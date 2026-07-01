@@ -113,7 +113,7 @@ PORT=7860
 
 ---
 
-## 🚀 Run Locally
+##  Run Locally
 
 ```bash
 # 1) Create and activate a venv (recommended)
