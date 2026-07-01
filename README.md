@@ -287,7 +287,7 @@ LinkedIn: [Yiğit ERDOĞAN](www.linkedin.com/in/yiğit-erdoğan-ba7a64294)
 
 > *“Offline RAG-style Q&A for university regulations—fast, safe, and local.”*
 >
-> ## 🤝 Contributing
+> ##  Contributing
 
 Contributions are welcome!  
 Please open an issue to discuss major changes. Run `ruff`/`black` before PRs:
